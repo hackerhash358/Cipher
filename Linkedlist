@@ -1,0 +1,74 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct num{
+    int number;
+    struct num * next;
+};
+
+struct num * userinput(struct num *);
+void printnumber(struct num *);
+struct num * CreateSpace(int);
+struct num * getlink(struct num * start, struct num * NextAddr);
+
+int main()
+{
+    struct num * storeinput, *start;
+    
+    storeinput = userinput(start);
+    printnumber(storeinput);
+}
+
+struct num * userinput(struct num * start)
+{
+    struct num * newValue, *JoinOrEnd;
+    int n;
+    printf("How many number you want to store: ");
+    scanf("%d", &n);
+    int i=0;
+    int value;
+    while(i < n)
+    {
+        printf("Enter number:");
+        scanf("%d", &value);
+        newValue = CreateSpace(value);
+        if(i == 0)
+        {
+            start = JoinOrEnd = newValue;
+        }
+        else
+        {
+            JoinOrEnd = getlink(JoinOrEnd, newValue);
+        }
+
+
+        i++;
+        
+    }
+    return start;
+}
+
+struct num * CreateSpace(int value)
+{
+    struct num * storeSpace; 
+    storeSpace = (struct num *) malloc(sizeof(struct num));
+    storeSpace->number = value;
+    storeSpace->next = NULL;
+    return storeSpace;
+}
+
+void printnumber(struct num * start)
+{
+    struct num * ptr = start;
+    while(ptr != NULL)
+    {
+        printf("%d\n", ptr->number);
+        ptr = ptr->next;
+    }
+}
+
+struct num * getlink(struct num * start, struct num * NextAddr)
+{
+    start->next = NextAddr;
+    return NextAddr;
+}
